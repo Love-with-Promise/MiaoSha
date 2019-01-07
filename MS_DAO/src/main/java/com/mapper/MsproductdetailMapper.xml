@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dao.MsproductdetailMapper">
+  <resultMap id="BaseResultMap" type="com.bean.Msproductdetail">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="productid" jdbcType="INTEGER" property="productid" />
+    <result column="merchantid" jdbcType="INTEGER" property="merchantid" />
+    <result column="productplace" jdbcType="VARCHAR" property="productplace" />
+    <result column="productname" jdbcType="VARCHAR" property="productname" />
+    <result column="brandname" jdbcType="VARCHAR" property="brandname" />
+    <result column="productweight" jdbcType="DOUBLE" property="productweight" />
+    <result column="specification" jdbcType="VARCHAR" property="specification" />
+    <result column="productdetailpicture" jdbcType="VARCHAR" property="productdetailpicture" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, productid, merchantid, productplace, productname, brandname, productweight, specification, 
+    productdetailpicture
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from msproductdetail
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from msproductdetail
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.bean.Msproductdetail">
+    insert into msproductdetail (id, productid, merchantid, 
+      productplace, productname, brandname, 
+      productweight, specification, productdetailpicture
+      )
+    values (#{id,jdbcType=INTEGER}, #{productid,jdbcType=INTEGER}, #{merchantid,jdbcType=INTEGER}, 
+      #{productplace,jdbcType=VARCHAR}, #{productname,jdbcType=VARCHAR}, #{brandname,jdbcType=VARCHAR}, 
+      #{productweight,jdbcType=DOUBLE}, #{specification,jdbcType=VARCHAR}, #{productdetailpicture,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.bean.Msproductdetail">
+    insert into msproductdetail
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="productid != null">
+        productid,
+      </if>
+      <if test="merchantid != null">
+        merchantid,
+      </if>
+      <if test="productplace != null">
+        productplace,
+      </if>
+      <if test="productname != null">
+        productname,
+      </if>
+      <if test="brandname != null">
+        brandname,
+      </if>
+      <if test="productweight != null">
+        productweight,
+      </if>
+      <if test="specification != null">
+        specification,
+      </if>
+      <if test="productdetailpicture != null">
+        productdetailpicture,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="productid != null">
+        #{productid,jdbcType=INTEGER},
+      </if>
+      <if test="merchantid != null">
+        #{merchantid,jdbcType=INTEGER},
+      </if>
+      <if test="productplace != null">
+        #{productplace,jdbcType=VARCHAR},
+      </if>
+      <if test="productname != null">
+        #{productname,jdbcType=VARCHAR},
+      </if>
+      <if test="brandname != null">
+        #{brandname,jdbcType=VARCHAR},
+      </if>
+      <if test="productweight != null">
+        #{productweight,jdbcType=DOUBLE},
+      </if>
+      <if test="specification != null">
+        #{specification,jdbcType=VARCHAR},
+      </if>
+      <if test="productdetailpicture != null">
+        #{productdetailpicture,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.bean.Msproductdetail">
+    update msproductdetail
+    <set>
+      <if test="productid != null">
+        productid = #{productid,jdbcType=INTEGER},
+      </if>
+      <if test="merchantid != null">
+        merchantid = #{merchantid,jdbcType=INTEGER},
+      </if>
+      <if test="productplace != null">
+        productplace = #{productplace,jdbcType=VARCHAR},
+      </if>
+      <if test="productname != null">
+        productname = #{productname,jdbcType=VARCHAR},
+      </if>
+      <if test="brandname != null">
+        brandname = #{brandname,jdbcType=VARCHAR},
+      </if>
+      <if test="productweight != null">
+        productweight = #{productweight,jdbcType=DOUBLE},
+      </if>
+      <if test="specification != null">
+        specification = #{specification,jdbcType=VARCHAR},
+      </if>
+      <if test="productdetailpicture != null">
+        productdetailpicture = #{productdetailpicture,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.bean.Msproductdetail">
+    update msproductdetail
+    set productid = #{productid,jdbcType=INTEGER},
+      merchantid = #{merchantid,jdbcType=INTEGER},
+      productplace = #{productplace,jdbcType=VARCHAR},
+      productname = #{productname,jdbcType=VARCHAR},
+      brandname = #{brandname,jdbcType=VARCHAR},
+      productweight = #{productweight,jdbcType=DOUBLE},
+      specification = #{specification,jdbcType=VARCHAR},
+      productdetailpicture = #{productdetailpicture,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <select id="queryMsproductdetailByid" parameterType="int" resultMap="BaseResultMap">
+    select * from msproductdetail WHERE id=#{productid};
+  </select>
+
+  <update id="updateMsproductdetail" parameterType="com.bean.Msproductdetail">
+    update msproductdetail set productplace=#{productplace},productname=#{productname},brandname=#{brandname},productweight=#{productweight},specification=#{specification},productdetailpicture=#{productdetailpicture} where productid=#{productid}
+  </update>
+
+</mapper>

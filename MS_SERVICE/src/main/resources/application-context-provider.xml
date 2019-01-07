@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://code.alibabatech.com/schema/dubbo
+        http://code.alibabatech.com/schema/dubbo/dubbo.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <dubbo:protocol name="dubbo" port="20880"></dubbo:protocol>
+    <dubbo:registry address="zookeeper://10.7.46.164:2181"/>
+    <dubbo:application name="MS_SERVICE"/>
+
+
+    <context:component-scan base-package="com.service"/>
+
+    <bean id="msorderServiceImpl" class="com.impl.MsorderServiceImpl"/>
+    <dubbo:service interface="com.service.MsorderService"  ref="msorderServiceImpl"/>
+
+    <bean id="msuserServiceImpl" class="com.impl.MsuserServiceImpl"/>
+    <dubbo:service interface="com.service.MsuserService"  ref="msuserServiceImpl"/>
+
+    <bean id="msmerchantServiceImpl" class="com.impl.MsmerchantServiceImpl"/>
+    <dubbo:service interface="com.service.MsmerchantService"  ref="msmerchantServiceImpl"/>
+
+    <dubbo:service interface="com.service.MsproductinfoService"  ref="msproductinfoServiceImpl"/>
+    <bean id="msproductinfoServiceImpl" class="com.impl.MsproductinfoServiceImpl"/>
+
+    <dubbo:service interface="com.service.MsproductdetailService"  ref="msproductdetailServiceImpl"/>
+    <bean id="msproductdetailServiceImpl" class="com.impl.MsproductdetailServiceImpl"/>
+
+    <dubbo:service interface="com.service.PayOrderService"  ref="weiXinServiceImpl"/>
+    <bean id="weiXinServiceImpl" class="com.impl.WeiXinServiceImpl"/>
+
+    <dubbo:service interface="com.service.PayOrderService"  ref="zhiFuBaoServiceImpl"/>
+    <bean id="zhiFuBaoServiceImpl" class="com.impl.ZhiFuBaoServiceImpl"/>
+
+    <dubbo:service interface="com.service.PayOrderService"  ref="yinLianServiceImpl"/>
+    <bean id="yinLianServiceImpl" class="com.impl.YinLianServiceImpl"/>
+</beans>

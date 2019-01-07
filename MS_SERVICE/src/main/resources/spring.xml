@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="
+       http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/tx
+       http://www.springframework.org/schema/tx/spring-tx.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd
+       http://www.springframework.org/schema/aop
+       http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+    <!--<context:property-placeholder location="classpath:mybatis.xml"></context:property-placeholder>-->
+
+    <!--<bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="location" value="classpath:config.properties"/>
+    </bean>-->
+
+
+    <context:component-scan base-package="com.impl"/>
+
+    <!-- 配置数据源 使用的是Druid数据源 -->
+    <bean name="dataSource" class="com.alibaba.druid.pool.DruidDataSource"
+          init-method="init" destroy-method="close">
+        <property name="url" value="jdbc:mysql://localhost/mssp?useUnicode=true" />
+        <property name="username" value="root" />
+        <property name="password" value="123" />
+        <!-- 初始化连接大小 -->
+        <property name="initialSize" value="5" />
+        <!-- 连接池最大使用连接数量 -->
+        <property name="maxActive" value="20" />
+
+        <!-- 连接池最小空闲 -->
+        <property name="minIdle" value="0" />
+        <!-- 获取连接最大等待时间 -->
+        <property name="maxWait" value="60000" />
+        <property name="poolPreparedStatements" value="true" />
+        <property name="maxPoolPreparedStatementPerConnectionSize"
+                  value="33" />
+        <!-- 用来检测有效sql -->
+        <property name="validationQuery" value="SELECT 'x' FROM DUAL" />
+        <property name="testOnBorrow" value="false" />
+        <property name="testOnReturn" value="false" />
+        <property name="testWhileIdle" value="true" />
+        <!-- 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒 -->
+        <property name="timeBetweenEvictionRunsMillis" value="60000" />
+        <!-- 配置一个连接在池中最小生存的时间，单位是毫秒 -->
+        <property name="minEvictableIdleTimeMillis" value="25200000" />
+        <!--&lt;!&ndash; 打开removeAbandoned功能 &ndash;&gt;-->
+        <!--<property name="removeAbandoned" value="true" />-->
+        <!--&lt;!&ndash; 1800秒，也就是30分钟 &ndash;&gt;-->
+        <!--<property name="removeAbandonedTimeout" value="1800" />-->
+        <!--&lt;!&ndash; 关闭abanded连接时输出错误日志 &ndash;&gt;-->
+        <!--<property name="logAbandoned" value="true" />-->
+        <!-- 监控数据库 -->
+        <property name="filters" value="mergeStat" />
+    </bean>
+    <!-- 注解方式配置事物-->
+    <!-- <tx:annotation-driven transaction-manager="transactionManager" />-->
+
+    <!-- 声明式事务管理 -->
+    <!-- 配置事务管理器 -->
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <!-- 注入dataSource -->
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+
+    <!--拦截方式配置事务-->
+    <tx:advice id="transactionAdvice" transaction-manager="transactionManager">
+        <tx:attributes>
+            <!--
+              propagation:事务传播行为；
+              isolation：事务隔离级别；
+              read-only：是否只读；
+              rollback-for：发生那些异常时回滚
+              timeout:事务过期时间
+             -->
+            <tx:method name="insert*" propagation="REQUIRED"/>
+            <tx:method name="update*" propagation="REQUIRED"/>
+            <tx:method name="delete*" propagation="REQUIRED"/>
+            <tx:method name="save*" propagation="REQUIRED"/>
+
+            <tx:method name="get*" propagation="SUPPORTS" read-only="true"/>
+            <tx:method name="find*" propagation="SUPPORTS" read-only="true"/>
+            <tx:method name="select*" propagation="SUPPORTS" read-only="true"/>
+        </tx:attributes>
+    </tx:advice>
+
+    <!-- Spring aop事务管理 -->
+    <aop:config>
+        <aop:pointcut id="transactionPointcut" expression="execution(* com.service..*Impl.*(..))"/>
+        <aop:advisor pointcut-ref="transactionPointcut" advice-ref="transactionAdvice"/>
+    </aop:config>
+
+    <bean id="druidStatInterceptor" class="com.alibaba.druid.support.spring.stat.DruidStatInterceptor"></bean>
+    <bean id="jdkRegexpMethodPointcut" class="org.springframework.aop.support.JdkRegexpMethodPointcut" scope="prototype">
+        <property name="patterns">
+            <list>
+                <value>com.service.*</value>
+                <value>com.dao.*</value>
+                <value>com.impl.*</value>
+            </list>
+        </property>
+    </bean>
+
+    <aop:config proxy-target-class="true">
+        <aop:advisor advice-ref="druidStatInterceptor" pointcut-ref="jdkRegexpMethodPointcut"></aop:advisor>
+    </aop:config>
+
+</beans>

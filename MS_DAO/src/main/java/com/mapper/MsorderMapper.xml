@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dao.MsorderMapper">
+  <resultMap id="BaseResultMap" type="com.bean.Msorder">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="productid" jdbcType="INTEGER" property="productid" />
+    <result column="payamount" jdbcType="INTEGER" property="payamount" />
+    <result column="merchantid" jdbcType="INTEGER" property="merchantid" />
+    <result column="userid" jdbcType="INTEGER" property="userid" />
+    <result column="createtime" jdbcType="TIMESTAMP" property="createtime" />
+    <result column="paytime" jdbcType="TIMESTAMP" property="paytime" />
+    <result column="paystatus" jdbcType="INTEGER" property="paystatus" />
+    <result column="receivingaddress" jdbcType="VARCHAR" property="receivingaddress" />
+    <result column="receivingphone" jdbcType="INTEGER" property="receivingphone" />
+    <result column="receivingname" jdbcType="VARCHAR" property="receivingname" />
+    <result column="tradeserialnumber" jdbcType="VARCHAR" property="tradeserialnumber" />
+    <result column="num" jdbcType="INTEGER" property="num" />
+    <result column="paytype" jdbcType="INTEGER" property="paytype" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, productid, payamount, merchantid, userid, createtime, paytime, paystatus, receivingaddress, 
+    receivingphone, receivingname, tradeserialnumber, num, paytype
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from msorder
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from msorder
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.bean.Msorder">
+    insert into msorder (id, productid, payamount, 
+      merchantid, userid, createtime, 
+      paytime, paystatus, receivingaddress, 
+      receivingphone, receivingname, tradeserialnumber, 
+      num, paytype)
+    values (#{id,jdbcType=INTEGER}, #{productid,jdbcType=INTEGER}, #{payamount,jdbcType=INTEGER}, 
+      #{merchantid,jdbcType=INTEGER}, #{userid,jdbcType=INTEGER}, #{createtime,jdbcType=TIMESTAMP}, 
+      #{paytime,jdbcType=TIMESTAMP}, #{paystatus,jdbcType=INTEGER}, #{receivingaddress,jdbcType=VARCHAR}, 
+      #{receivingphone,jdbcType=INTEGER}, #{receivingname,jdbcType=VARCHAR}, #{tradeserialnumber,jdbcType=VARCHAR}, 
+      #{num,jdbcType=INTEGER}, #{paytype,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.bean.Msorder">
+    insert into msorder
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="productid != null">
+        productid,
+      </if>
+      <if test="payamount != null">
+        payamount,
+      </if>
+      <if test="merchantid != null">
+        merchantid,
+      </if>
+      <if test="userid != null">
+        userid,
+      </if>
+      <if test="createtime != null">
+        createtime,
+      </if>
+      <if test="paytime != null">
+        paytime,
+      </if>
+      <if test="paystatus != null">
+        paystatus,
+      </if>
+      <if test="receivingaddress != null">
+        receivingaddress,
+      </if>
+      <if test="receivingphone != null">
+        receivingphone,
+      </if>
+      <if test="receivingname != null">
+        receivingname,
+      </if>
+      <if test="tradeserialnumber != null">
+        tradeserialnumber,
+      </if>
+      <if test="num != null">
+        num,
+      </if>
+      <if test="paytype != null">
+        paytype,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="productid != null">
+        #{productid,jdbcType=INTEGER},
+      </if>
+      <if test="payamount != null">
+        #{payamount,jdbcType=INTEGER},
+      </if>
+      <if test="merchantid != null">
+        #{merchantid,jdbcType=INTEGER},
+      </if>
+      <if test="userid != null">
+        #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="createtime != null">
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="paytime != null">
+        #{paytime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="paystatus != null">
+        #{paystatus,jdbcType=INTEGER},
+      </if>
+      <if test="receivingaddress != null">
+        #{receivingaddress,jdbcType=VARCHAR},
+      </if>
+      <if test="receivingphone != null">
+        #{receivingphone,jdbcType=INTEGER},
+      </if>
+      <if test="receivingname != null">
+        #{receivingname,jdbcType=VARCHAR},
+      </if>
+      <if test="tradeserialnumber != null">
+        #{tradeserialnumber,jdbcType=VARCHAR},
+      </if>
+      <if test="num != null">
+        #{num,jdbcType=INTEGER},
+      </if>
+      <if test="paytype != null">
+        #{paytype,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.bean.Msorder">
+    update msorder
+    <set>
+      <if test="productid != null">
+        productid = #{productid,jdbcType=INTEGER},
+      </if>
+      <if test="payamount != null">
+        payamount = #{payamount,jdbcType=INTEGER},
+      </if>
+      <if test="merchantid != null">
+        merchantid = #{merchantid,jdbcType=INTEGER},
+      </if>
+      <if test="userid != null">
+        userid = #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="createtime != null">
+        createtime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="paytime != null">
+        paytime = #{paytime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="paystatus != null">
+        paystatus = #{paystatus,jdbcType=INTEGER},
+      </if>
+      <if test="receivingaddress != null">
+        receivingaddress = #{receivingaddress,jdbcType=VARCHAR},
+      </if>
+      <if test="receivingphone != null">
+        receivingphone = #{receivingphone,jdbcType=INTEGER},
+      </if>
+      <if test="receivingname != null">
+        receivingname = #{receivingname,jdbcType=VARCHAR},
+      </if>
+      <if test="tradeserialnumber != null">
+        tradeserialnumber = #{tradeserialnumber,jdbcType=VARCHAR},
+      </if>
+      <if test="num != null">
+        num = #{num,jdbcType=INTEGER},
+      </if>
+      <if test="paytype != null">
+        paytype = #{paytype,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.bean.Msorder">
+    update msorder
+    set productid = #{productid,jdbcType=INTEGER},
+      payamount = #{payamount,jdbcType=INTEGER},
+      merchantid = #{merchantid,jdbcType=INTEGER},
+      userid = #{userid,jdbcType=INTEGER},
+      createtime = #{createtime,jdbcType=TIMESTAMP},
+      paytime = #{paytime,jdbcType=TIMESTAMP},
+      paystatus = #{paystatus,jdbcType=INTEGER},
+      receivingaddress = #{receivingaddress,jdbcType=VARCHAR},
+      receivingphone = #{receivingphone,jdbcType=INTEGER},
+      receivingname = #{receivingname,jdbcType=VARCHAR},
+      tradeserialnumber = #{tradeserialnumber,jdbcType=VARCHAR},
+      num = #{num,jdbcType=INTEGER},
+      paytype = #{paytype,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <select id="selectByUserId" parameterType="int" resultMap="BaseResultMap">
+    SELECT * FROM msorder WHERE userid=#{value}
+  </select>
+
+  <update id="updateorderpaystatusbyid" parameterType="com.vo.MsorderVo">
+    UPDATE  msorder SET paystatus=#{constomOrder.paystatus},paytype=#{constomOrder.paytype} WHERE id=#{constomOrder.id}
+  </update>
+</mapper>

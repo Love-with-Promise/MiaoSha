@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dao.MsmerchantMapper">
+  <resultMap id="BaseResultMap" type="com.bean.Msmerchant">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="merchantname" jdbcType="VARCHAR" property="merchantname" />
+    <result column="merchantshopname" jdbcType="VARCHAR" property="merchantshopname" />
+    <result column="merchantaccount" jdbcType="VARCHAR" property="merchantaccount" />
+    <result column="merchantpassword" jdbcType="VARCHAR" property="merchantpassword" />
+    <result column="merchantscope" jdbcType="VARCHAR" property="merchantscope" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, merchantname, merchantshopname, merchantaccount, merchantpassword, merchantscope
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from msmerchant
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from msmerchant
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.bean.Msmerchant">
+    insert into msmerchant (id, merchantname, merchantshopname, 
+      merchantaccount, merchantpassword, merchantscope
+      )
+    values (#{id,jdbcType=INTEGER}, #{merchantname,jdbcType=VARCHAR}, #{merchantshopname,jdbcType=VARCHAR}, 
+      #{merchantaccount,jdbcType=VARCHAR}, #{merchantpassword,jdbcType=VARCHAR}, #{merchantscope,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.bean.Msmerchant">
+    insert into msmerchant
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="merchantname != null">
+        merchantname,
+      </if>
+      <if test="merchantshopname != null">
+        merchantshopname,
+      </if>
+      <if test="merchantaccount != null">
+        merchantaccount,
+      </if>
+      <if test="merchantpassword != null">
+        merchantpassword,
+      </if>
+      <if test="merchantscope != null">
+        merchantscope,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="merchantname != null">
+        #{merchantname,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantshopname != null">
+        #{merchantshopname,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantaccount != null">
+        #{merchantaccount,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantpassword != null">
+        #{merchantpassword,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantscope != null">
+        #{merchantscope,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.bean.Msmerchant">
+    update msmerchant
+    <set>
+      <if test="merchantname != null">
+        merchantname = #{merchantname,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantshopname != null">
+        merchantshopname = #{merchantshopname,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantaccount != null">
+        merchantaccount = #{merchantaccount,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantpassword != null">
+        merchantpassword = #{merchantpassword,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantscope != null">
+        merchantscope = #{merchantscope,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.bean.Msmerchant">
+    update msmerchant
+    set merchantname = #{merchantname,jdbcType=VARCHAR},
+      merchantshopname = #{merchantshopname,jdbcType=VARCHAR},
+      merchantaccount = #{merchantaccount,jdbcType=VARCHAR},
+      merchantpassword = #{merchantpassword,jdbcType=VARCHAR},
+      merchantscope = #{merchantscope,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <sql id="consutomsql" >
+    <if test="constomMsmerchant != null">
+      <if test="constomMsmerchant.merchantname!=null and constomMsmerchant.merchantname!=''">
+        and merchantname = "${constomMsmerchant.merchantname}"
+      </if>
+      <if test="constomMsmerchant.merchantshopname!=null and constomMsmerchant.merchantshopname!='' ">
+        and merchantshopname = "${constomMsmerchant.merchantshopname}"
+      </if>
+      <if test="constomMsmerchant.merchantaccount!=null and constomMsmerchant.merchantaccount!='' ">
+        and merchantaccount = "${constomMsmerchant.merchantaccount}"
+      </if>
+      <if test="constomMsmerchant.merchantpassword!=null and constomMsmerchant.merchantpassword!='' ">
+        and constomMsmerchant.merchantpassword = "${constomMsmerchant.merchantpassword}"
+      </if>
+      <if test="constomMsmerchant.merchantscope!=null and constomMsmerchant.merchantscope!='' ">
+        and merchantscope = "${constomMsmerchant.merchantscope}"
+      </if>
+    </if>
+  </sql>
+
+  <select id="queryMsmerchantbyvo" resultMap="BaseResultMap" parameterType="com.vo.MsmerchantVo">
+    select * from msmerchant
+    <where>
+      <include refid="consutomsql"/>
+    </where>
+  </select>
+
+  <select id="queryMsmerchantByaccount" parameterType="string" resultMap="BaseResultMap">
+    select * from msmerchant WHERE merchantaccount=#{value};
+  </select>
+</mapper>

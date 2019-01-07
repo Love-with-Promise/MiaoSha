@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dao.MsuserMapper">
+  <resultMap id="BaseResultMap" type="com.bean.Msuser">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="username" jdbcType="VARCHAR" property="username" />
+    <result column="useraccount" jdbcType="VARCHAR" property="useraccount" />
+    <result column="userpassword" jdbcType="VARCHAR" property="userpassword" />
+    <result column="usersex" jdbcType="INTEGER" property="usersex" />
+    <result column="userage" jdbcType="INTEGER" property="userage" />
+    <result column="useraddress" jdbcType="VARCHAR" property="useraddress" />
+    <result column="useremail" jdbcType="VARCHAR" property="useremail" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, username, useraccount, userpassword, usersex, userage, useraddress, useremail
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from msuser
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from msuser
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.bean.Msuser">
+    insert into msuser (id, username, useraccount, 
+      userpassword, usersex, userage, 
+      useraddress, useremail)
+    values (#{id,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, #{useraccount,jdbcType=VARCHAR}, 
+      #{userpassword,jdbcType=VARCHAR}, #{usersex,jdbcType=INTEGER}, #{userage,jdbcType=INTEGER}, 
+      #{useraddress,jdbcType=VARCHAR}, #{useremail,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.bean.Msuser">
+    insert into msuser
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="username != null">
+        username,
+      </if>
+      <if test="useraccount != null">
+        useraccount,
+      </if>
+      <if test="userpassword != null">
+        userpassword,
+      </if>
+      <if test="usersex != null">
+        usersex,
+      </if>
+      <if test="userage != null">
+        userage,
+      </if>
+      <if test="useraddress != null">
+        useraddress,
+      </if>
+      <if test="useremail != null">
+        useremail,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="username != null">
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="useraccount != null">
+        #{useraccount,jdbcType=VARCHAR},
+      </if>
+      <if test="userpassword != null">
+        #{userpassword,jdbcType=VARCHAR},
+      </if>
+      <if test="usersex != null">
+        #{usersex,jdbcType=INTEGER},
+      </if>
+      <if test="userage != null">
+        #{userage,jdbcType=INTEGER},
+      </if>
+      <if test="useraddress != null">
+        #{useraddress,jdbcType=VARCHAR},
+      </if>
+      <if test="useremail != null">
+        #{useremail,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.bean.Msuser">
+    update msuser
+    <set>
+      <if test="username != null">
+        username = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="useraccount != null">
+        useraccount = #{useraccount,jdbcType=VARCHAR},
+      </if>
+      <if test="userpassword != null">
+        userpassword = #{userpassword,jdbcType=VARCHAR},
+      </if>
+      <if test="usersex != null">
+        usersex = #{usersex,jdbcType=INTEGER},
+      </if>
+      <if test="userage != null">
+        userage = #{userage,jdbcType=INTEGER},
+      </if>
+      <if test="useraddress != null">
+        useraddress = #{useraddress,jdbcType=VARCHAR},
+      </if>
+      <if test="useremail != null">
+        useremail = #{useremail,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.bean.Msuser">
+    update msuser
+    set username = #{username,jdbcType=VARCHAR},
+      useraccount = #{useraccount,jdbcType=VARCHAR},
+      userpassword = #{userpassword,jdbcType=VARCHAR},
+      usersex = #{usersex,jdbcType=INTEGER},
+      userage = #{userage,jdbcType=INTEGER},
+      useraddress = #{useraddress,jdbcType=VARCHAR},
+      useremail = #{useremail,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <sql id="consutomsql" >
+    <if test="constomUser != null">
+      <if test="constomUser.username!=null and constomUser.username!=''">
+        and username = "${constomUser.username}"
+      </if>
+      <if test="constomUser.useraccount!=null and constomUser.useraccount!='' ">
+        and useraccount = "${constomUser.useraccount}"
+      </if>
+      <if test="constomUser.userpassword!=null and constomUser.userpassword!='' ">
+        and userpassword = "${constomUser.userpassword}"
+      </if>
+      <if test="constomUser.usersex!=null and constomUser.usersex!='' ">
+        and usersex = "${constomUser.usersex}"
+      </if>
+      <if test="constomUser.userage!=null and constomUser.userage!='' ">
+        and userage = "${constomUser.userage}"
+      </if>
+      <if test="constomUser.useraddress!=null and constomUser.useraddress!='' ">
+        and useraddress = "${constomUser.useraddress}"
+      </if>
+      <if test="constomUser.useremail!=null and constomUser.useremail!='' ">
+        and useremail = "${constomUser.useremail}"
+      </if>
+    </if>
+  </sql>
+
+  <select id="queryMsuserbyvo" parameterType="com.vo.MsuserVo" resultMap="BaseResultMap">
+    SELECT * FROM msuser
+    <where>
+      <include refid="consutomsql"/>
+    </where>
+  </select>
+
+  <select id="queryMsuserByuseraccount" parameterType="string" resultMap="BaseResultMap">
+    SELECT * FROM msuser WHERE useraccount= #{account}
+  </select>
+</mapper>

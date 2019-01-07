@@ -1,0 +1,293 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dao.MsproductinfoMapper">
+  <resultMap id="BaseResultMap" type="com.bean.Msproductinfo">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="productid" jdbcType="INTEGER" property="productid" />
+    <result column="producttitle" jdbcType="VARCHAR" property="producttitle" />
+    <result column="productpicture" jdbcType="VARCHAR" property="productpicture" />
+    <result column="originalprice" jdbcType="INTEGER" property="originalprice" />
+    <result column="miaoshaprie" jdbcType="INTEGER" property="miaoshaprie" />
+    <result column="merchantid" jdbcType="INTEGER" property="merchantid" />
+    <result column="applydate" jdbcType="TIMESTAMP" property="applydate" />
+    <result column="auditdate" jdbcType="TIMESTAMP" property="auditdate" />
+    <result column="auditstate" jdbcType="INTEGER" property="auditstate" />
+    <result column="starttime" jdbcType="TIMESTAMP" property="starttime" />
+    <result column="endtime" jdbcType="TIMESTAMP" property="endtime" />
+    <result column="productcount" jdbcType="INTEGER" property="productcount" />
+    <result column="stockcount" jdbcType="INTEGER" property="stockcount" />
+    <result column="description" jdbcType="VARCHAR" property="description" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, productid, producttitle, productpicture, originalprice, miaoshaprie, merchantid, 
+    applydate, auditdate, auditstate, starttime, endtime, productcount, stockcount, description
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from msproductinfo
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from msproductinfo
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.bean.Msproductinfo">
+    insert into msproductinfo (id, productid, producttitle, 
+      productpicture, originalprice, miaoshaprie, 
+      merchantid, applydate, auditdate, 
+      auditstate, starttime, endtime, 
+      productcount, stockcount, description
+      )
+    values (#{id,jdbcType=INTEGER}, #{productid,jdbcType=INTEGER}, #{producttitle,jdbcType=VARCHAR}, 
+      #{productpicture,jdbcType=VARCHAR}, #{originalprice,jdbcType=INTEGER}, #{miaoshaprie,jdbcType=INTEGER}, 
+      #{merchantid,jdbcType=INTEGER}, #{applydate,jdbcType=TIMESTAMP}, #{auditdate,jdbcType=TIMESTAMP}, 
+      #{auditstate,jdbcType=INTEGER}, #{starttime,jdbcType=TIMESTAMP}, #{endtime,jdbcType=TIMESTAMP}, 
+      #{productcount,jdbcType=INTEGER}, #{stockcount,jdbcType=INTEGER}, #{description,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.bean.Msproductinfo">
+    insert into msproductinfo
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="productid != null">
+        productid,
+      </if>
+      <if test="producttitle != null">
+        producttitle,
+      </if>
+      <if test="productpicture != null">
+        productpicture,
+      </if>
+      <if test="originalprice != null">
+        originalprice,
+      </if>
+      <if test="miaoshaprie != null">
+        miaoshaprie,
+      </if>
+      <if test="merchantid != null">
+        merchantid,
+      </if>
+      <if test="applydate != null">
+        applydate,
+      </if>
+      <if test="auditdate != null">
+        auditdate,
+      </if>
+      <if test="auditstate != null">
+        auditstate,
+      </if>
+      <if test="starttime != null">
+        starttime,
+      </if>
+      <if test="endtime != null">
+        endtime,
+      </if>
+      <if test="productcount != null">
+        productcount,
+      </if>
+      <if test="stockcount != null">
+        stockcount,
+      </if>
+      <if test="description != null">
+        description,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="productid != null">
+        #{productid,jdbcType=INTEGER},
+      </if>
+      <if test="producttitle != null">
+        #{producttitle,jdbcType=VARCHAR},
+      </if>
+      <if test="productpicture != null">
+        #{productpicture,jdbcType=VARCHAR},
+      </if>
+      <if test="originalprice != null">
+        #{originalprice,jdbcType=INTEGER},
+      </if>
+      <if test="miaoshaprie != null">
+        #{miaoshaprie,jdbcType=INTEGER},
+      </if>
+      <if test="merchantid != null">
+        #{merchantid,jdbcType=INTEGER},
+      </if>
+      <if test="applydate != null">
+        #{applydate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="auditdate != null">
+        #{auditdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="auditstate != null">
+        #{auditstate,jdbcType=INTEGER},
+      </if>
+      <if test="starttime != null">
+        #{starttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endtime != null">
+        #{endtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="productcount != null">
+        #{productcount,jdbcType=INTEGER},
+      </if>
+      <if test="stockcount != null">
+        #{stockcount,jdbcType=INTEGER},
+      </if>
+      <if test="description != null">
+        #{description,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.bean.Msproductinfo">
+    update msproductinfo
+    <set>
+      <if test="productid != null">
+        productid = #{productid,jdbcType=INTEGER},
+      </if>
+      <if test="producttitle != null">
+        producttitle = #{producttitle,jdbcType=VARCHAR},
+      </if>
+      <if test="productpicture != null">
+        productpicture = #{productpicture,jdbcType=VARCHAR},
+      </if>
+      <if test="originalprice != null">
+        originalprice = #{originalprice,jdbcType=INTEGER},
+      </if>
+      <if test="miaoshaprie != null">
+        miaoshaprie = #{miaoshaprie,jdbcType=INTEGER},
+      </if>
+      <if test="merchantid != null">
+        merchantid = #{merchantid,jdbcType=INTEGER},
+      </if>
+      <if test="applydate != null">
+        applydate = #{applydate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="auditdate != null">
+        auditdate = #{auditdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="auditstate != null">
+        auditstate = #{auditstate,jdbcType=INTEGER},
+      </if>
+      <if test="starttime != null">
+        starttime = #{starttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endtime != null">
+        endtime = #{endtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="productcount != null">
+        productcount = #{productcount,jdbcType=INTEGER},
+      </if>
+      <if test="stockcount != null">
+        stockcount = #{stockcount,jdbcType=INTEGER},
+      </if>
+      <if test="description != null">
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.bean.Msproductinfo">
+    update msproductinfo
+    set productid = #{productid,jdbcType=INTEGER},
+      producttitle = #{producttitle,jdbcType=VARCHAR},
+      productpicture = #{productpicture,jdbcType=VARCHAR},
+      originalprice = #{originalprice,jdbcType=INTEGER},
+      miaoshaprie = #{miaoshaprie,jdbcType=INTEGER},
+      merchantid = #{merchantid,jdbcType=INTEGER},
+      applydate = #{applydate,jdbcType=TIMESTAMP},
+      auditdate = #{auditdate,jdbcType=TIMESTAMP},
+      auditstate = #{auditstate,jdbcType=INTEGER},
+      starttime = #{starttime,jdbcType=TIMESTAMP},
+      endtime = #{endtime,jdbcType=TIMESTAMP},
+      productcount = #{productcount,jdbcType=INTEGER},
+      stockcount = #{stockcount,jdbcType=INTEGER},
+      description = #{description,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <update id="updatemsproductstate" parameterType="com.vo.MsProductVo">
+    update msproductinfo set auditstate=#{constomProduct.auditstate} where id=#{constomProduct.id}
+  </update>
+
+  <sql id="consutomsql" >
+    <if test="constomProduct != null">
+      <if test="constomProduct.productid!=null and constomProduct.productid!=''">
+        and productid = "${constomProduct.productid}"
+      </if>
+      <if test="constomProduct.producttitle!=null and constomProduct.producttitle!='' ">
+        and producttitle  like "%${constomProduct.producttitle}%"
+      </if>
+      <if test="constomProduct.startmiaoshaprice!=null and constomProduct.startmiaoshaprice!='' ">
+        and miaoshaprie <![CDATA[ >= ]]> "${constomProduct.startmiaoshaprice}"
+      </if>
+      <if test="constomProduct.endmiaoshaprice!=null and constomProduct.endmiaoshaprice!='' ">
+        and miaoshaprie <![CDATA[ <= ]]> "${constomProduct.endmiaoshaprice}"
+      </if>
+      <if test="constomProduct.startoriginalprice!=null and constomProduct.startoriginalprice!='' ">
+        and originalprice <![CDATA[ >= ]]> "${constomProduct.startoriginalprice}"
+      </if>
+      <if test="constomProduct.endoriginalprice!=null and constomProduct.endoriginalprice!='' " >
+        and originalprice <![CDATA[ <= ]]> "${constomProduct.endoriginalprice}"
+      </if>
+      <if test="constomProduct.endstockcount!=null and constomProduct.endstockcount!='' ">
+        and stockcount <![CDATA[ <= ]]> "${constomProduct.endstockcount}"
+      </if>
+      <if test="constomProduct.description!=null and constomProduct.description!=''">
+        and description like "%${constomProduct.description}%"
+      </if>
+      <if test="constomProduct.endapplydate!=null and constomProduct.endapplydate!='' ">
+        and applydate <![CDATA[ <= ]]> STR_TO_DATE(#{constomProduct.endapplydate},'%Y-%m-%d %H:%i:%S')
+      </if>
+
+      <if test="constomProduct.endauditdate!=null and constomProduct.endauditdate!='' ">
+        and auditdate <![CDATA[ <= ]]> STR_TO_DATE(#{constomProduct.endauditdate},'%Y-%m-%d %H:%i:%S')
+      </if>
+      <if test="constomProduct.startapplydate!=null and constomProduct.startapplydate!='' ">
+        and applydate <![CDATA[ >= ]]> STR_TO_DATE(#{constomUser.startapplydate},'%Y-%m-%d %H:%i:%S')
+      </if>
+      <if test="constomProduct.startauditdate!=null and constomProduct.startauditdate!='' ">
+        and auditdate <![CDATA[ >= ]]> STR_TO_DATE(#{constomProduct.startauditdate},'%Y-%m-%d %H:%i:%S')
+      </if>
+      <if test="constomProduct.auditstate!=null and constomProduct.auditstate!='' ">
+        and auditstate = "${constomProduct.auditstate}"
+      </if>
+      <if test="constomProduct.startstarttime!=null and constomProduct.startstarttime!='' ">
+        and starttime <![CDATA[ >= ]]> STR_TO_DATE(#{constomProduct.startstarttime},'%Y-%m-%d %H:%i:%S')
+      </if>
+      <if test="constomProduct.endstarttime!=null and constomProduct.endstarttime!='' ">
+        and starttime <![CDATA[ <= ]]> STR_TO_DATE(#{constomProduct.endstarttime},'%Y-%m-%d %H:%i:%S')
+      </if>
+      <if test="constomProduct.startendtime!=null and constomProduct.startendtime!='' ">
+        and endtime <![CDATA[ >= ]]> STR_TO_DATE(#{constomProduct.startendtime},'%Y-%m-%d %H:%i:%S')
+
+      </if>
+      <if test="constomProduct.endendtime!=null and constomProduct.endendtime!='' ">
+        and endtime <![CDATA[ <= ]]>  STR_TO_DATE(#{constomProduct.endendtime},'%Y-%m-%d %H:%i:%S')
+      </if>
+      <if test="constomProduct.startproductcount!=null and constomProduct.startproductcount!='' ">
+        and productcount <![CDATA[ >= ]]> "${constomProduct.startproductcount}"
+      </if>
+      <if test="constomProduct.endproductcount!=null and constomProduct.endproductcount!='' ">
+        and productcount <![CDATA[ <= ]]> "${constomProduct.endproductcount}"
+      </if>
+      <if test="constomProduct.startstockcount!=null and constomProduct.startstockcount!='' ">
+        and stockcount <![CDATA[ >= ]]> "${constomProduct.startstockcount}"
+      </if>
+      <if test="constomProduct.endstockcount!=null and constomProduct.endstockcount!='' ">
+        and stockcount <![CDATA[ <= ]]> "${constomProduct.endstockcount}"
+      </if>
+    </if>
+  </sql>
+
+  <select id="listmsproduct" parameterType="com.vo.MsProductVo" resultMap="BaseResultMap">
+    select * from msproductinfo
+    <where>
+      <include refid="consutomsql"></include>
+    </where>
+  </select>
+</mapper>
