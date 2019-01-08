@@ -3,6 +3,7 @@ package com.controller;
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.bean.Msproductdetail;
 import com.bean.Msproductinfo;
+import com.bean.Msuser;
 import com.common.BaseController;
 import com.service.MsproductdetailService;
 import com.service.MsproductinfoService;
@@ -14,11 +15,14 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.io.*;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -35,7 +39,7 @@ import java.util.List;
 @Controller
 @RequestMapping("pagehomeAction")
 public class PageHomeController extends BaseController {
-
+    private Logger logger=Logger.getLogger(PageHomeController.class);
 
     @Autowired(required=false)
     private MsproductinfoService msproductService;
@@ -56,8 +60,10 @@ public class PageHomeController extends BaseController {
 //		private Date startstarttime;//秒杀开始时间查询范围开始时间
 //		private Date endstarttime;//秒杀开始时间查询范围结束时间
         msProductVo.setConstomProduct(constomProduct);
+        logger.info("-------***"+msProductVo);
         List<Msproductinfo> list = msproductService.listmsproduct(msProductVo);
         req.setAttribute("list", list);
+        logger.info("-------***"+list.size());
         return "homepage/homepage";
     }
 
@@ -70,7 +76,7 @@ public class PageHomeController extends BaseController {
         return "order/selldetail";
     }
 
-
+    //生成频道列表静态化页面
     @RequestMapping("producehtml")
     public void producehtml(HttpServletRequest req){
         String htmlPath=req.getRealPath("/WEB-INF/html/");
@@ -104,4 +110,15 @@ public class PageHomeController extends BaseController {
         }
     }
 
+    @RequestMapping("getuser")
+    @ResponseBody
+    public String getUser(HttpServletRequest request){
+        HttpSession session=request.getSession();
+        Msuser msuser= (Msuser) session.getAttribute("msuser");
+        String account="";
+        if (msuser!=null){
+            account=msuser.getUsername();
+        }
+        return  account;
+    }
 }
