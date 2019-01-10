@@ -2,6 +2,7 @@ package com.controller;
 
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.bean.Msproductinfo;
+import com.cache.MsproductinfoServiceCache;
 import com.common.BaseController;
 import com.service.MsproductinfoService;
 import com.util.DateUtil;
@@ -32,6 +33,9 @@ public class MsproductinfoController extends BaseController {
     @Autowired(required=false)
     private MsproductinfoService msproductinfoService;
 
+    @Autowired(required=false)
+    private MsproductinfoServiceCache msproductinfoServiceCache;
+
     @RequestMapping(value="toApplymsproduct")
     public String toApplymsproduct(){
         logger.info("----------");
@@ -59,9 +63,10 @@ public class MsproductinfoController extends BaseController {
     }
 
 
+    //使用Ehcache缓存查询
     @RequestMapping(value="querymsproductByid")
     public String querymsproductByid(HttpServletRequest req,int id){
-        Msproductinfo  msproductinfo =  msproductinfoService.selectByPrimaryKey(id);
+        Msproductinfo  msproductinfo =  msproductinfoServiceCache.selectByPrimaryKey(id);
         req.setAttribute("msproductinfo", msproductinfo);
         return "msproductinfo/view";
     }

@@ -13,6 +13,7 @@
     <module>MS_DAO</module>
     <module>MS_SERVICE</module>
     <module>MS_WEB</module>
+    <module>MS_CACHE</module>
   </modules>
   <packaging>pom</packaging>
   <name>MiaoSha</name>

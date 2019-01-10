@@ -22,7 +22,7 @@ import javax.servlet.http.HttpSession;
 @Controller
 @RequestMapping("msmerchantReloginAction")
 public class MsmerchantReloginController extends BaseController {
-    @Autowired
+    @Autowired(required=false)
     private MsmerchantService msmerchantService;
     @RequestMapping(value = "toregiter")
     public String toregiter(){

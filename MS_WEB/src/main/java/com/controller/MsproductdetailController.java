@@ -2,6 +2,7 @@ package com.controller;
 
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.bean.Msproductdetail;
+import com.cache.MsproductdetailServiceCache;
 import com.common.BaseController;
 import com.service.MsproductdetailService;
 import org.apache.log4j.Logger;
@@ -26,6 +27,10 @@ public class MsproductdetailController extends BaseController {
     final static Logger logger=Logger.getLogger(MsproductdetailController.class);
     @Autowired(required=false)
     private MsproductdetailService msproductDetailService;
+
+    @Autowired(required=false)
+    private MsproductdetailServiceCache msproductdetailServiceCache;
+
     @RequestMapping(value="toinsertMsproductdetail")
     public String toinsertMsproductdetail(HttpServletRequest req, int productid, int merchantid){
         req.setAttribute("productid", productid);
@@ -42,10 +47,10 @@ public class MsproductdetailController extends BaseController {
     }
 
 
-
+//使用Ehcache缓存查询
     @RequestMapping(value="queryMsproductdetailByid")
     public String queryMsproductdetailByid(HttpServletRequest req,int productid){
-        Msproductdetail msproductdetail = msproductDetailService.queryMsproductdetailByid(productid);
+        Msproductdetail msproductdetail = msproductdetailServiceCache.queryMsproductdetailByid(productid);
         req.setAttribute("msproductdetail", msproductdetail);
         return "msproductDetail/msproductdetailview";
     }

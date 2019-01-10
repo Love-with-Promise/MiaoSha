@@ -38,4 +38,5 @@
 
     <dubbo:service interface="com.service.PayOrderService"  ref="yinLianServiceImpl"/>
     <bean id="yinLianServiceImpl" class="com.impl.YinLianServiceImpl"/>
+
 </beans>

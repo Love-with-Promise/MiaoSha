@@ -25,7 +25,7 @@ import java.util.List;
 public class MsmerchantController extends BaseController {
     final  static Logger logger=Logger.getLogger(MsmerchantController.class);
 
-    @Autowired
+    @Autowired(required=false)
     private MsmerchantService msmerchantService;
 
 

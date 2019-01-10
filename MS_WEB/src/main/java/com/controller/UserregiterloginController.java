@@ -23,7 +23,7 @@ import javax.servlet.http.HttpSession;
 @RequestMapping("userregiterloginAction")
 public class UserregiterloginController {
     final static Logger logger=Logger.getLogger(UserregiterloginController.class);
-    @Autowired
+    @Autowired(required=false)
     private MsuserService msuserService;
     @RequestMapping(value = "toregiter")
     public String toregiter(){
