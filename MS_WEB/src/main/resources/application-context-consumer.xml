@@ -14,7 +14,7 @@
     <dubbo:reference id="msuserService" interface="com.service.MsuserService"/>
     <dubbo:reference id="msorderService" interface="com.service.MsorderService"/>
 
-    <dubbo:reference id="msproductinfoServiceCache" interface="com.cache.MsproductinfoServiceCache"/>
-    <dubbo:reference id="msproductdetailServiceCache" interface="com.cache.MsproductdetailServiceCache"/>
+    <dubbo:reference id="msproductinfoRedisService" interface="com.redis.MsproductinfoRedisService"/>
+    <dubbo:reference id="msproductdetailRedisService" interface="com.redis.MsproductdetailRedisService"/>
 
 </beans>

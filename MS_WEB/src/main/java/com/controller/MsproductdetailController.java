@@ -4,6 +4,7 @@ import com.alibaba.dubbo.config.annotation.Reference;
 import com.bean.Msproductdetail;
 import com.cache.MsproductdetailServiceCache;
 import com.common.BaseController;
+import com.redis.MsproductdetailRedisService;
 import com.service.MsproductdetailService;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +30,7 @@ public class MsproductdetailController extends BaseController {
     private MsproductdetailService msproductDetailService;
 
     @Autowired(required=false)
-    private MsproductdetailServiceCache msproductdetailServiceCache;
+    private MsproductdetailRedisService msproductdetailRedisService;
 
     @RequestMapping(value="toinsertMsproductdetail")
     public String toinsertMsproductdetail(HttpServletRequest req, int productid, int merchantid){
@@ -50,7 +51,7 @@ public class MsproductdetailController extends BaseController {
 //使用Ehcache缓存查询
     @RequestMapping(value="queryMsproductdetailByid")
     public String queryMsproductdetailByid(HttpServletRequest req,int productid){
-        Msproductdetail msproductdetail = msproductdetailServiceCache.queryMsproductdetailByid(productid);
+        Msproductdetail msproductdetail = msproductdetailRedisService.queryMsproductdetailByid(productid);
         req.setAttribute("msproductdetail", msproductdetail);
         return "msproductDetail/msproductdetailview";
     }

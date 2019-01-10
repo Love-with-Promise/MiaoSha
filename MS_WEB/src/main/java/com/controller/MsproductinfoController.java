@@ -4,6 +4,7 @@ import com.alibaba.dubbo.config.annotation.Reference;
 import com.bean.Msproductinfo;
 import com.cache.MsproductinfoServiceCache;
 import com.common.BaseController;
+import com.redis.MsproductinfoRedisService;
 import com.service.MsproductinfoService;
 import com.util.DateUtil;
 import com.vo.MsProductVo;
@@ -34,7 +35,7 @@ public class MsproductinfoController extends BaseController {
     private MsproductinfoService msproductinfoService;
 
     @Autowired(required=false)
-    private MsproductinfoServiceCache msproductinfoServiceCache;
+    private MsproductinfoRedisService msproductinfoRedisService;
 
     @RequestMapping(value="toApplymsproduct")
     public String toApplymsproduct(){
@@ -66,7 +67,10 @@ public class MsproductinfoController extends BaseController {
     //使用Ehcache缓存查询
     @RequestMapping(value="querymsproductByid")
     public String querymsproductByid(HttpServletRequest req,int id){
-        Msproductinfo  msproductinfo =  msproductinfoServiceCache.selectByPrimaryKey(id);
+        Msproductinfo  msproductinfo =  msproductinfoRedisService.selectByPrimaryKey(id);
+        if (msproductinfo==null){
+            return "hello";
+        }
         req.setAttribute("msproductinfo", msproductinfo);
         return "msproductinfo/view";
     }
