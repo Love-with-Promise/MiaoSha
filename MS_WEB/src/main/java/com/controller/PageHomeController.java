@@ -110,6 +110,57 @@ public class PageHomeController extends BaseController {
         }
     }
 
+
+    @RequestMapping("producejs")
+    public void producejs(HttpServletRequest req){
+        String jsPath=req.getRealPath("/WEB-INF/classes/js");
+        String jscontent = "function remaintime(){" + "\n" +
+                "var starttime = $(\"#starttime\").html();" +"\n" +
+                "var s1 = new Date(starttime.replace(\"/-/g\",\"/\"));"+"\n" +
+                "var s2 = new Date();"+"\n" +
+                "var date3 = s1.getTime() - s2.getTime();//这是一个相差时间戳" +"\n" +
+                "if(date3 > 2){"+"\n" +
+                "$(\"#sellbnt\").attr({\"disabled\":\"disabled\"});" +"\n" +
+                "var days = Math.floor(date3/(24*3600*1000));" +"\n" +
+                "var leave = date3%(24*3600*1000)"+"\n" +
+                "var hours = Math.floor(leave/(3600*1000));"+"\n" +
+                "var leave1 = leave%(3600*1000)"+"\n" +
+                "var minutes = Math.floor(leave1/(60*1000));"+"\n" +
+                "var leave2 = leave1%(60*1000)"+"\n" +
+                "var seconds = Math.floor(leave2/1000)"+"\n" +
+                "$(\"#remainnoties\").html(\"相差 \"+days+\" 天\"+ hours + \" 小时\" + minutes + \" 分钟\"+seconds+\"秒\");" +"\n" +
+                "}else{" + "\n" +
+                "$(\"#remainnoties\").html(\"\");" + "\n" +
+                "$(\"#sellbnt\").removeAttr(\"disabled\");" +"\n" +
+                "$(\"#sellbnt\").parent().attr(\"action\",\"/orderAction/topayorder\");" +"\n" +
+                "}" + "\n" +
+                "}" +"\n" +
+                "// test js new "+"\n" +
+                "setInterval('remaintime()',500);";
+        File file = new File(jsPath+"/remain.js");//存到应用的htmlPath目录下
+        Writer writer = null;
+        try {
+            writer = new BufferedWriter(
+                    new OutputStreamWriter(
+                            new FileOutputStream(file), "utf-8"));
+            writer.write(jscontent);
+            writer.flush();
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }finally{
+            if (writer != null)
+                try {
+                    writer.close();
+                } catch (IOException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+        }
+
+    }
+
+
     @RequestMapping("getuser")
     @ResponseBody
     public String getUser(HttpServletRequest request){

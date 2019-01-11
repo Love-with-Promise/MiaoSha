@@ -1,5 +1,7 @@
-<%@ page language="java" contentType="text/html; charset=utf-8"
-    pageEncoding="utf-8"%>
+<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<c:set var="ctx" value="${pageContext.request.contextPath}"></c:set>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -7,8 +9,8 @@
 <title>Insert title here</title>
 </head>
 <body>
-<form action="/orderAction/topayorder">
-购买数量：<input type="text" name="num" >
+<form action="#">
+购买数量：<input type="text" name="num" ><span id="remainnoties"></span>
 <input type="hidden" name="id" value="${msproduct.id}">
 <table border="1">
 	<tr>
@@ -27,8 +29,8 @@
 		<td>${msproduct.productpicture}</td>
 		<td>${msproduct.miaoshaprie}</td>
 		<td>${msproduct.originalprice}</td>
-		<td>${msproduct.starttime}</td>
-		<td>${msproduct.endtime}</td>
+		<td><span id="starttime"><fmt:formatDate value="${msproduct.starttime}" pattern="yyyy-MM-dd HH:mm:dd"/></span></td>
+		<td><span id="endtime"><fmt:formatDate value="${msproduct.endtime}" pattern="yyyy-MM-dd HH:mm:dd"/></span></td>
 		<td>${msproduct.productcount}</td>
 		<td>${msproduct.stockcount}</td>
 	</tr>
@@ -51,12 +53,15 @@
 		<td>${msproductdetail.productdetailpicture}</td>
 	</tr>
 </table>
-<input type="button" value="立即购买" onclick="submit(this)"/>
+<input id="sellbnt" type="button" value="立即购买" onclick="submit(this)"/>
 </form>
 </body>
+
+<script type="text/javascript" src="${ctx}/js/jquery-3.3.1.min.js"></script>
 <script type="text/javascript">
-function submit(obj){
-	obj.parent.sumbit();
-}
+    function submit(obj){
+        obj.parent.sumbit();
+    }
+    document.write( "<script src='${ctx}/js/remain.js?radom=" + Math.random() + " '></s" + "cript>" )
 </script>
 </html>

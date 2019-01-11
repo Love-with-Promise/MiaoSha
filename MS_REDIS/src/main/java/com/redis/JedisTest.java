@@ -11,7 +11,7 @@ import redis.clients.jedis.Jedis;
  **/
 public class JedisTest {
     public static void main(String[] args) {
-        Jedis jedis=new Jedis("127.0.0.1");
+        Jedis jedis=new Jedis("192.168.137.128");
         System.out.println("---------");
         jedis.set("text","123");
         System.out.println(jedis.get("text"));
