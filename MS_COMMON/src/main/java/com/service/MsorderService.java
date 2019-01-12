@@ -20,4 +20,10 @@ public interface MsorderService extends BaseService<Msorder,Integer> {
     void updateorderpaystatusbyid(int payStatus, int id, int payType);
 
     void updateorderpaystatusbynumber(int payStatus, String tradeserialnumber, int payType, Date paytime);
+
+    void updateOrderpayStatusByTradeserialnumber(int payStatus, String tradeserialnumber);
+
+    List<Msorder> listOrder();
+
+    void updateFlagById(int orderflag, Integer id);
 }

@@ -11,4 +11,6 @@ import com.bean.Msproductinfo;
  **/
 public interface MsproductinfoRedisService {
      Msproductinfo selectByPrimaryKey(int id);
+
+     void updateProductById(Msproductinfo msproductinfo);
 }

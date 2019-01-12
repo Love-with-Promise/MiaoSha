@@ -24,4 +24,10 @@ public interface MsorderMapper extends BaseMapper<Msorder,Integer> {
     void updateorderpaystatusbyid(MsorderVo msorderVo);
 
     void updateorderpaystatusbynumber(MsorderVo msorderVo);
+
+    void updateOrderpayStatusBytradeSerialnumber(MsorderVo msorderVo);
+
+    List<Msorder> selectListOrder();
+
+    void updateFlagById(Msorder msorder);
 }

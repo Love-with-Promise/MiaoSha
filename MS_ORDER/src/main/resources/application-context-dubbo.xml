@@ -10,7 +10,11 @@
 	<dubbo:registry address="zookeeper://127.0.0.1:2181" />
 	
 	<dubbo:reference id="msorderService" interface="com.service.MsorderService"/>
-     
+
+
+	<dubbo:reference id="zhiFuBaoPay" interface="com.pay.ZhiFuBaoPay"/>
+	<dubbo:reference id="yinLianPay" interface="com.pay.YinLianPay"/>
+	<dubbo:reference id="weiXinPay" interface="com.pay.WeiXinPay"/>
      
      
 	

@@ -23,6 +23,14 @@ public class OrderRedisServiceImpl implements OrderRedisService {
 
     @Autowired
     private RabbitTemplate rabbitTemplate;
+
+    /**
+     * 商品秒杀
+     * @param userid
+     * @param productid
+     * @param msorder
+     * @return
+     */
     public Map<String,Object> seckill(int userid, int productid, ConstomOrder msorder) {
         Map<String,Object> resultmap = new HashMap<String,Object>();
         int stockcount = msorder.getStockcount();//库存总数
@@ -65,6 +73,16 @@ public class OrderRedisServiceImpl implements OrderRedisService {
         return resultmap;
     }
 
+    /**
+     * 订单支付
+     * @param paytype
+     * @param userid
+     * @param productid
+     * @param merchantid
+     * @param tradeserialnumber
+     * @param payamount
+     * @return
+     */
     public boolean payorder(int paytype,int userid,int productid,int merchantid,String tradeserialnumber, int payamount){
         String key = "userid:"+userid+"==productid:"+productid;
         String value = (String) redisUtil.get(key);
@@ -84,6 +102,7 @@ public class OrderRedisServiceImpl implements OrderRedisService {
         rabbitTemplate.convertAndSend("ms_exchange","payinfomation",datamap);
         return issuccess;
     }
+
 
     public List<Msorder> queryorderbyuserid(int userid){
         List<Msorder> listmsorder = new ArrayList<Msorder>();
@@ -122,4 +141,5 @@ public class OrderRedisServiceImpl implements OrderRedisService {
         }
         return listmsorder;
     }
+
 }

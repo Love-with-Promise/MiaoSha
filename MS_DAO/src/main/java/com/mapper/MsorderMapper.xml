@@ -200,8 +200,19 @@
   <select id="selectByUserId" parameterType="int" resultMap="BaseResultMap">
     SELECT * FROM msorder WHERE userid=#{value}
   </select>
+  <select id="selectListOrder" resultType="com.bean.Msorder">
+    select * from msorder;
+  </select>
 
-  <update id="updateorderpaystatusbyid" parameterType="com.vo.MsorderVo">
+  <update id="updateOrderpayStatusBytradeSerialnumber" parameterType="com.vo.MsorderVo">
+      UPDATE  msorder SET paystatus=#{paystatus} WHERE tradeserialnumber=#{tradeserialnumber}
+    </update>
+
+  <update id="updateFlagById" parameterType="com.bean.Msorder">
+    UPDATE  msorder SET orderflag=#{orderflag} WHERE id=#{id}
+  </update>
+
+    <update id="updateorderpaystatusbyid" parameterType="com.vo.MsorderVo">
     UPDATE  msorder SET paystatus=#{constomOrder.paystatus},paytype=#{constomOrder.paytype} WHERE id=#{constomOrder.id}
   </update>
 

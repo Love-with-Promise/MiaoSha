@@ -17,4 +17,5 @@ public interface MsproductinfoService extends BaseService<Msproductinfo,Integer>
     List<Msproductinfo> listmsproduct(MsProductVo msProductVo);
 
     void updatemsproductstate(int id, int state);
+
 }

@@ -29,4 +29,11 @@ public class MsproductinfoRedisServiceImpl implements MsproductinfoRedisService 
         }
         return msproductinfo;
     }
+
+    public void updateProductById(Msproductinfo msproductinfo){
+        Msproductinfo msproductinfo1=msproductinfoServiceCache.updateproductbyid(msproductinfo);
+        int id=msproductinfo1.getId();
+        msproductinfo=msproductinfoServiceCache.selectByPrimaryKey(id);
+        redisUtil.set("product:"+id,msproductinfo);
+    }
 }

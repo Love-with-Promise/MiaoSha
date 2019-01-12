@@ -50,4 +50,27 @@ public class MsorderServiceImpl extends AbstractService<Msorder,Integer> impleme
         msorderVo.setConstomOrder(constomOrder);
         msorderMapper.updateorderpaystatusbynumber(msorderVo);
     }
+
+
+    public void updateOrderpayStatusByTradeserialnumber(int payStatus, String tradeserialnumber){
+        MsorderVo msorderVo=new MsorderVo();
+        ConstomOrder constomOrder=new ConstomOrder();
+        constomOrder.setPaytype(payStatus);
+        constomOrder.setTradeserialnumber(tradeserialnumber);
+        msorderVo.setConstomOrder(constomOrder);
+        msorderMapper.updateOrderpayStatusBytradeSerialnumber(msorderVo);
+    }
+
+    @Override
+    public List<Msorder> listOrder() {
+        return msorderMapper.selectListOrder();
+    }
+
+    @Override
+    public void updateFlagById(int orderflag, Integer id) {
+        Msorder msorder=new Msorder();
+        msorder.setId(id);
+        msorder.setOrderflag(orderflag);
+        msorderMapper.updateFlagById(msorder);
+    }
 }

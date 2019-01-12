@@ -104,7 +104,7 @@ public class MsproductinfoController extends BaseController {
 
     @RequestMapping(value="updatemsproduct",method=RequestMethod.POST)
     public String updatemsproduct(HttpServletRequest req,Msproductinfo msproductinfo){
-        msproductinfoService.updateByPrimaryKey(msproductinfo);
+        msproductinfoRedisService.updateProductById(msproductinfo);
         return "redirect:listmsproduct";
     }
 

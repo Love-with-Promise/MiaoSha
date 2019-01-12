@@ -15,4 +15,6 @@ import java.util.List;
  **/
 public interface MsproductinfoServiceCache  {
      Msproductinfo selectByPrimaryKey(int id);
+
+     Msproductinfo updateproductbyid(Msproductinfo msproductinfo);
 }

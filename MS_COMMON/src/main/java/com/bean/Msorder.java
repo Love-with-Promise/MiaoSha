@@ -32,6 +32,8 @@ public class Msorder implements Serializable {
 
     private Integer paytype;
 
+    private Integer orderflag;
+
     private static final long serialVersionUID = 1L;
 
     public Integer getId() {
@@ -144,6 +146,14 @@ public class Msorder implements Serializable {
 
     public void setPaytype(Integer paytype) {
         this.paytype = paytype;
+    }
+
+    public Integer getOrderflag() {
+        return orderflag;
+    }
+
+    public void setOrderflag(Integer orderflag) {
+        this.orderflag = orderflag;
     }
 
     @Override
