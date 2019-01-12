@@ -15,6 +15,7 @@
     <module>MS_WEB</module>
     <module>MS_CACHE</module>
     <module>MS_REDIS</module>
+      <module>MS_ORDER</module>
   </modules>
   <packaging>pom</packaging>
   <name>MiaoSha</name>

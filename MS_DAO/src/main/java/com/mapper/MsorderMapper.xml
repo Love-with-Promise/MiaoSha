@@ -204,4 +204,8 @@
   <update id="updateorderpaystatusbyid" parameterType="com.vo.MsorderVo">
     UPDATE  msorder SET paystatus=#{constomOrder.paystatus},paytype=#{constomOrder.paytype} WHERE id=#{constomOrder.id}
   </update>
+
+  <update id="updateorderpaystatusbynumber" parameterType="com.vo.MsorderVo">
+    UPDATE  msorder SET paystatus=#{constomOrder.paystatus},paytype=#{constomOrder.paytype},paytime=#{constomOrder.paytime} WHERE tradeserialnumber=#{constomOrder.tradeserialnumber}
+  </update>
 </mapper>

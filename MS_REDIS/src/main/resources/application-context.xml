@@ -15,6 +15,8 @@
     <dubbo:service interface="com.redis.MsproductinfoRedisService" ref="msproductinfoRedisServiceImpl"/>
     <bean id="msproductinfoRedisServiceImpl" class="com.redis.MsproductinfoRedisServiceImpl"/>
 
+    <dubbo:service interface="com.redis.OrderRedisService" ref="orderRedisServiceImpl"/>
+    <bean id="orderRedisServiceImpl" class="com.redis.OrderRedisServiceImpl"/>
 
     <dubbo:reference id="msproductdetailServiceCache" interface="com.cache.MsproductdetailServiceCache"/>
     <dubbo:reference id="msproductinfoServiceCache" interface="com.cache.MsproductinfoServiceCache"/>

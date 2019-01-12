@@ -14,11 +14,14 @@
 银联:<input type="radio" name="paytype" value="3" />
 支付总额：${payamount}
 流水号:${tradeserialnumber}
-<input type="hidden" name="id" value="${id}">
+<input type="hidden" name="userid" value="${userid}">
+<input type="hidden" name="productid" value="${productid}">
+<input type="hidden" name="merchantid" value="${merchantid}">
 <input type="hidden" name="tradeserialnumber" value="${tradeserialnumber}">
 <input type="hidden" name="payamount" value="${payamount}">
 <input type="button" value="立即付款" onclick="submit(this)"/>
 </form>
+
 </body>
 <script type="text/javascript">
 function submit(obj){

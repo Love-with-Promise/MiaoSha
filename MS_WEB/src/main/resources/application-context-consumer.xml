@@ -7,14 +7,18 @@
     <context:component-scan base-package="com.controller"/>
     <dubbo:application name="MS_WEB"/>
     <dubbo:registry address="zookeeper://10.7.46.164:2181"/>
-    <dubbo:reference id="payOrderService" interface="com.service.PayOrderService"/>
+   <!-- <dubbo:reference id="payOrderService" interface="com.service.PayOrderService"/>-->
     <dubbo:reference id="msproductdetailService" interface="com.service.MsproductdetailService"/>
     <dubbo:reference id="msproductinfoService" interface="com.service.MsproductinfoService"/>
     <dubbo:reference id="msmerchantService" interface="com.service.MsmerchantService"/>
     <dubbo:reference id="msuserService" interface="com.service.MsuserService"/>
     <dubbo:reference id="msorderService" interface="com.service.MsorderService"/>
 
+    <dubbo:reference id="zhiFuBaoPay" interface="com.pay.ZhiFuBaoPay"/>
+    <dubbo:reference id="yinLianPay" interface="com.pay.YinLianPay"/>
+    <dubbo:reference id="weiXinPay" interface="com.pay.WeiXinPay"/>
+
     <dubbo:reference id="msproductinfoRedisService" interface="com.redis.MsproductinfoRedisService"/>
     <dubbo:reference id="msproductdetailRedisService" interface="com.redis.MsproductdetailRedisService"/>
-
+    <dubbo:reference id="orderRedisService" interface="com.redis.OrderRedisService"/>
 </beans>

@@ -10,7 +10,7 @@
 </head>
 <body>
 <form action="#">
-购买数量：<input type="text" name="num" ><span id="remainnoties"></span>
+购买数量：1<input type="hidden" name="num" value="1"><span id="remainnoties"></span>
 <input type="hidden" name="id" value="${msproduct.id}">
 <table border="1">
 	<tr>

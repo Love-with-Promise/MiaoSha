@@ -100,7 +100,7 @@
     <bean id="jdkRegexpMethodPointcut" class="org.springframework.aop.support.JdkRegexpMethodPointcut" scope="prototype">
         <property name="patterns">
             <list>
-                <value>com.com.service.*</value>
+                <value>com.com.com.*</value>
                 <value>com.dao.*</value>
                 <value>com.impl.*</value>
             </list>

@@ -1,5 +1,6 @@
 package com.impl;
 
+import com.pay.YinLianPay;
 import com.service.PayOrderService;
 import org.springframework.stereotype.Service;
 
@@ -10,8 +11,8 @@ import org.springframework.stereotype.Service;
  * @date: 2018/12/6 22:02
  * @version: 1.0
  **/
-@Service(value = "yinLianServiceImpl")
-public class YinLianServiceImpl implements PayOrderService {
+@Service
+public class YinLianServiceImpl implements YinLianPay {
 
     @Override
     public int payToOrder(String tradeserialnumber, int payamount) {

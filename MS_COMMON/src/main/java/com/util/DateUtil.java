@@ -2,6 +2,7 @@ package com.util;
 
 import org.apache.commons.lang.StringUtils;
 
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -284,5 +285,10 @@ public class DateUtil {
             lDate.add(calBegin.getTime());
         }
         return lDate;
+    }
+
+    public static String transferdate(Date date,String dateFormatParam){
+        DateFormat dateFormat=new SimpleDateFormat(dateFormatParam);
+        return dateFormat.format(date);
     }
 }

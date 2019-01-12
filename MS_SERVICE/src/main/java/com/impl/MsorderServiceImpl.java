@@ -9,6 +9,7 @@ import com.vo.MsorderVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -36,5 +37,17 @@ public class MsorderServiceImpl extends AbstractService<Msorder,Integer> impleme
         constomOrder.setPaytype(payType);
         msorderVo.setConstomOrder(constomOrder);
         msorderMapper.updateorderpaystatusbyid(msorderVo);
+    }
+
+    @Override
+    public void updateorderpaystatusbynumber(int payStatus, String tradeserialnumber, int payType, Date paytime) {
+        MsorderVo msorderVo=new MsorderVo();
+        ConstomOrder constomOrder=new ConstomOrder();
+        constomOrder.setPaystatus(payStatus);
+        constomOrder.setTradeserialnumber(tradeserialnumber);
+        constomOrder.setPaytype(payType);
+        constomOrder.setPaytime(paytime);
+        msorderVo.setConstomOrder(constomOrder);
+        msorderMapper.updateorderpaystatusbynumber(msorderVo);
     }
 }

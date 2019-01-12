@@ -1,5 +1,6 @@
 package com.impl;
 
+import com.pay.WeiXinPay;
 import com.service.PayOrderService;
 import org.springframework.stereotype.Service;
 
@@ -11,7 +12,7 @@ import org.springframework.stereotype.Service;
  * @version: 1.0
  **/
 @Service
-public class WeiXinServiceImpl implements PayOrderService {
+public class WeiXinServiceImpl implements WeiXinPay {
 
     @Override
     public int payToOrder(String tradeserialnumber, int payamount) {

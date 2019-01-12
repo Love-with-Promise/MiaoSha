@@ -6,9 +6,15 @@ import com.bean.Msorder;
 import com.bean.Msproductinfo;
 import com.bean.Msuser;
 import com.common.BaseController;
+import com.pay.WeiXinPay;
+import com.pay.YinLianPay;
+import com.pay.ZhiFuBaoPay;
+import com.redis.MsproductinfoRedisService;
+import com.redis.OrderRedisService;
 import com.service.MsorderService;
 import com.service.MsproductinfoService;
 import com.service.PayOrderService;
+import com.vo.ConstomOrder;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -21,6 +27,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 /**
@@ -40,36 +47,53 @@ public class MsorderController extends BaseController {
     @Autowired(required=false)
     MsproductinfoService msproductService;
 
+    @Autowired(required=false)
+    private MsproductinfoRedisService msproductinfoRedisService;
 
-    @Qualifier("zhiFuBaoServiceImpl")
+    @Autowired(required=false)
+    private OrderRedisService orderRedisService;
+
     @Autowired(required = false)
-    PayOrderService zhiFuBaoService;
+    ZhiFuBaoPay zhiFuBaoService;
 
-    @Qualifier("weiXinServiceImpl")
     @Autowired(required = false)
-    PayOrderService weiXinService;
+    WeiXinPay weiXinService;
 
-    @Qualifier("yinLianServiceImpl")
     @Autowired(required = false)
-    PayOrderService yinLianService;
+    YinLianPay yinLianService;
 
-    @RequestMapping("payorder")
-    public String payorder(Msorder msorder) {
-        Date now = new Date();
-        msorder.setCreatetime(now);
-        int paystatus = 1;
-        msorder.setPaystatus(paystatus);
-        String tradeserialnumber = UUID.randomUUID().toString();
-        msorder.setTradeserialnumber(tradeserialnumber);
-        msoderService.insert(msorder);
-        return "redirect:/pagehomeAction/tohome";
+    @RequestMapping(value = "payorder", method = RequestMethod.POST)
+    public String payorder(HttpServletRequest request,ConstomOrder msorder) {
+        String returnurl="redirect:/pagehomeAction/tohome";
+        HttpSession session=request.getSession();
+        Msuser msuser= (Msuser) session.getAttribute("msuser");
+        if (msuser!=null){
+           Map<String,Object> map= orderRedisService.seckill(msuser.getId(),msorder.getProductid(),msorder);
+           boolean isSuccess= (Boolean) map.get("success");
+           if (isSuccess){
+               System.out.println("秒杀成功");
+               Map<String,String> datamap= (Map<String, String>) map.get("datamap");
+               String merchantid=datamap.get("merchantid");
+               String payamount=datamap.get("payamount");
+               String tradeserialnumber=datamap.get("tradeserialnumber");
+               String productid=datamap.get("productid");
+               String userid=datamap.get("userid");
+               returnurl="redirect:topaywithorder?userid="+userid+"&&productid="+productid+"&&tradeserialnumber="+tradeserialnumber+"&&payamount="+payamount+"&&merchantid="+merchantid;
+           }else {
+               System.out.println("秒杀失败");
+           }
+        }else {
+            request.setAttribute("error","未登录");
+             returnurl="user/tologin";
+        }
+        return returnurl;
 
     }
 
 
     @RequestMapping("topayorder")
     public String topayorder(HttpServletRequest req, int id, int num) {
-        Msproductinfo msproductinfo = msproductService.selectByPrimaryKey(id);
+        Msproductinfo msproductinfo = msproductinfoRedisService.selectByPrimaryKey(id);
         req.setAttribute("msproductinfo", msproductinfo);
         req.setAttribute("productnum", num);
         int payamount = num * msproductinfo.getMiaoshaprie();
@@ -91,7 +115,7 @@ public class MsorderController extends BaseController {
         HttpSession session = request.getSession();
         Msuser msuser = (Msuser) session.getAttribute("msuser");
         if (msuser != null) {
-            List<Msorder> list = msoderService.selectByUserId(msuser.getId());
+            List<Msorder> list = orderRedisService.queryorderbyuserid(msuser.getId());
             request.setAttribute("list", list);
         } else {
             request.setAttribute("error", "未登录，请登录");
@@ -103,30 +127,31 @@ public class MsorderController extends BaseController {
     /**
      * 跳转到支付页面
      * @param req
-     * @param id
      * @param tradeserialnumber
      * @param payamount
      * @return
      */
     @RequestMapping("topaywithorder")
-    public String topaywithorder(HttpServletRequest req,int id,String tradeserialnumber, int payamount){
-        req.setAttribute("id", id);
+    public String topaywithorder(HttpServletRequest req,int userid,int productid,int merchantid,String tradeserialnumber, int payamount){
+        req.setAttribute("userid", userid);
+        req.setAttribute("productid",productid);
+        req.setAttribute("merchantid",merchantid);
         req.setAttribute("tradeserialnumber", tradeserialnumber);
         req.setAttribute("payamount", payamount);
         return "order/payreal";
+
 
     }
 
     /**
      * 选择支付方式
-     * @param id
      * @param tradeserialnumber
      * @param payamount
      * @param paytype
      * @return
      */
     @RequestMapping(value = "paywithorder",method = RequestMethod.POST)
-    public String payToOrder( int paytype,int id,String tradeserialnumber, int payamount) {
+    public String payToOrder( HttpServletRequest req,int paytype,int userid,int productid,int merchantid,String tradeserialnumber, int payamount) {
         int payStatus = 2;
         if (paytype==1) {
             payStatus = zhiFuBaoService.payToOrder(tradeserialnumber, payamount);
@@ -137,8 +162,12 @@ public class MsorderController extends BaseController {
         }
 
         if (payStatus == 1) {
-            logger.info(payStatus);
-            msoderService.updateorderpaystatusbyid(2,id,paytype);
+            boolean isSuccess=orderRedisService.payorder(paytype,userid,productid,merchantid,tradeserialnumber,payamount);
+            if (isSuccess){
+                System.out.println("支付成功");
+            }else {
+                System.out.println("支付失败");
+            }
         }
         return "redirect:queryorderbyuserid";
     }

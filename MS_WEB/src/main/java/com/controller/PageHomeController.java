@@ -5,6 +5,8 @@ import com.bean.Msproductdetail;
 import com.bean.Msproductinfo;
 import com.bean.Msuser;
 import com.common.BaseController;
+import com.redis.MsproductdetailRedisService;
+import com.redis.MsproductinfoRedisService;
 import com.service.MsproductdetailService;
 import com.service.MsproductinfoService;
 import com.vo.ConstomProduct;
@@ -47,6 +49,12 @@ public class PageHomeController extends BaseController {
     @Autowired(required=false)
     private MsproductdetailService msproductdetailService;
 
+    @Autowired
+    private MsproductinfoRedisService msproductinfoRedisService;
+
+    @Autowired
+    private MsproductdetailRedisService msproductdetailRedisService;
+
     @RequestMapping("tohome")
     public String tohome(HttpServletRequest req){
         MsProductVo msProductVo = new MsProductVo();
@@ -69,8 +77,8 @@ public class PageHomeController extends BaseController {
 
     @RequestMapping("viewproductdetail")
     public String viewproductdetail(HttpServletRequest req,int id){
-        Msproductinfo msproduct = msproductService.selectByPrimaryKey(id);
-        Msproductdetail msproductdetail = msproductdetailService.queryMsproductdetailByid(id);
+        Msproductinfo msproduct = msproductinfoRedisService.selectByPrimaryKey(id);
+        Msproductdetail msproductdetail = msproductdetailRedisService.queryMsproductdetailByid(id);
         req.setAttribute("msproduct", msproduct);
         req.setAttribute("msproductdetail", msproductdetail);
         return "order/selldetail";

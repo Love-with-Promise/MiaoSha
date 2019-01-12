@@ -30,13 +30,13 @@
     <dubbo:service interface="com.service.MsproductdetailService"  ref="msproductdetailServiceImpl"/>
     <bean id="msproductdetailServiceImpl" class="com.impl.MsproductdetailServiceImpl"/>
 
-    <dubbo:service interface="com.service.PayOrderService"  ref="weiXinServiceImpl"/>
+    <dubbo:service interface="com.pay.WeiXinPay"  ref="weiXinServiceImpl"/>
     <bean id="weiXinServiceImpl" class="com.impl.WeiXinServiceImpl"/>
 
-    <dubbo:service interface="com.service.PayOrderService"  ref="zhiFuBaoServiceImpl"/>
+    <dubbo:service interface="com.pay.ZhiFuBaoPay"  ref="zhiFuBaoServiceImpl"/>
     <bean id="zhiFuBaoServiceImpl" class="com.impl.ZhiFuBaoServiceImpl"/>
 
-    <dubbo:service interface="com.service.PayOrderService"  ref="yinLianServiceImpl"/>
+    <dubbo:service interface="com.pay.YinLianPay"  ref="yinLianServiceImpl"/>
     <bean id="yinLianServiceImpl" class="com.impl.YinLianServiceImpl"/>
 
 </beans>
