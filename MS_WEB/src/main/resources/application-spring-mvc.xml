@@ -44,9 +44,11 @@
         </property>
     </bean>
 
+    <!--样式拦截-->
     <mvc:resources mapping="/html/**" location="/WEB-INF/html/"/>
     <mvc:resources mapping="/js/**" location="/WEB-INF/classes/js/" />
-
+    <mvc:resources mapping="/css/**" location="/WEB-INF/classes/css/" />
+    <mvc:resources mapping="/img/**" location="/WEB-INF/classes/img/" />
 
 
     <bean id="dataSource1" class="org.apache.commons.dbcp.BasicDataSource">
